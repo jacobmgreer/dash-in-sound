@@ -244,7 +244,7 @@ def graph_match_expr(graph_name: str, alias: str = None) -> str:
 @st.cache_data
 def query_overview(_con, filter_clause: str) -> pd.DataFrame:
 
-    base_expr = graph_match_expr("base")
+    base_expr = graph_match_expr("clean")
     disc_expr = graph_match_expr("discovery")
 
     type_col = schema["type"]
@@ -271,7 +271,7 @@ def query_overview(_con, filter_clause: str) -> pd.DataFrame:
 @st.cache_data
 def query_dimension(_con, dim_table: str, bitmask_col: str, filter_clause: str) -> pd.DataFrame:
 
-    base_expr = graph_match_expr("base", "f")
+    base_expr = graph_match_expr("clean", "f")
     disc_expr = graph_match_expr("discovery", "f")
 
     return con.execute(
@@ -297,7 +297,7 @@ def query_dimension(_con, dim_table: str, bitmask_col: str, filter_clause: str) 
 @st.cache_data
 def query_by_source(_con, filter_clause: str) -> pd.DataFrame:
 
-    base_expr = graph_match_expr("base", "f")
+    base_expr = graph_match_expr("clean", "f")
     disc_expr = graph_match_expr("discovery", "f")
 
     src_col = schema["source"]

@@ -1,11 +1,8 @@
 CREATE OR REPLACE MACRO get_source_mapping() AS TABLE (
     SELECT * FROM (VALUES 
-        (1,  'IMDb'),
-        (2,  'TMDb'),
-        (3,  'Wikidata'),
-        (4,  'EIDR'),
-        (5,  'MusicBrainz'),
-        (6,  'Discogs'),
-        (7,  'What.CD')
+        (1,  'Discogs'),
+        (2,  'MusicBrainz'),
+        (3,  'What.CD'),
+        (4,  'Wikidata')
     ) AS t(bit, value)
 );

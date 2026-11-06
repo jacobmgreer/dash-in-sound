@@ -118,9 +118,9 @@ def get_engine_state():
         raise ValueError(f"Could not find {label}. Tried: {candidates}")
 
     schema = {
-        "type": pick_col(["type"], "Type column"),
+        "type": pick_col(["big_type"], "Type column"),
+        "source": pick_col(["big_source"], "Source column"),
         "decades": pick_col(["decades"], "Decade bitmask"),
-        "source": pick_col(["source"], "Source column"),
         "origins": pick_col(["origins"], "Origin bitmask"),
         "genres": pick_col(["genres"], "Genre bitmask"),
         "graph_col": pick_col(["comp"], "Graph bitmask"),

@@ -3,6 +3,7 @@ CREATE OR REPLACE MACRO get_source_mapping() AS TABLE (
         (0,  'Discogs'),
         (1,  'MusicBrainz'),
         (2,  'What.CD'),
-        (3,  'Wikidata')
+        (3,  'Wikidata'),
+        (4,  'Billboard')
     ) AS t(bit, value)
 );

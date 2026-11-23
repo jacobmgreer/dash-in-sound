@@ -22,8 +22,8 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-TYPE_CONTENT = 1
-TYPE_CREATOR = 2
+TYPE_CONTENT = 3, 4
+TYPE_CREATOR = 1, 2
 HF_DATASET_URI = "hf://datasets/jacobmgreer/in-sound/**/*.parquet"
 MACRO_DIR = "macros"
 
@@ -203,7 +203,7 @@ def build_filter_clauses(filters: dict) -> str:
     # Record type filter
     if selected_record_type is not None:
         type_val = TYPE_CONTENT if selected_record_type == "CONTENT" else TYPE_CREATOR
-        clauses.append(f" AND {schema['type']} = {type_val}")
+        clauses.append(f" AND {schema['type']} IN {type_val}")
     
     # Source filter
     selected_sources = filters.get("sources", [])
@@ -257,13 +257,13 @@ def query_overview(_con, filter_clause: str) -> pd.DataFrame:
             WHERE 1=1 {filter_clause}
         )
         SELECT
-            COUNT(*) FILTER (WHERE {type_col} = 1) AS total_content,
-            COUNT(*) FILTER (WHERE {type_col} = 1 AND {base_expr}) AS base_content,
-            COUNT(*) FILTER (WHERE {type_col} = 1 AND {disc_expr}) AS disc_content,
+            COUNT(*) FILTER (WHERE {type_col} IN (3, 4)) AS total_content,
+            COUNT(*) FILTER (WHERE {type_col} IN (3, 4) AND {base_expr}) AS base_content,
+            COUNT(*) FILTER (WHERE {type_col} IN (3, 4) AND {disc_expr}) AS disc_content,
 
-            COUNT(*) FILTER (WHERE {type_col} = 2) AS total_creator,
-            COUNT(*) FILTER (WHERE {type_col} = 2 AND {base_expr}) AS base_creator,
-            COUNT(*) FILTER (WHERE {type_col} = 2 AND {disc_expr}) AS disc_creator
+            COUNT(*) FILTER (WHERE {type_col} IN (1, 2)) AS total_creator,
+            COUNT(*) FILTER (WHERE {type_col} IN (1, 2) AND {base_expr}) AS base_creator,
+            COUNT(*) FILTER (WHERE {type_col} IN (1, 2) AND {disc_expr}) AS disc_creator
         FROM filtered
         """
     ).df()
